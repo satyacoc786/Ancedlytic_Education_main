@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acadivance — Smart Campus Analytics</title>
+  <link rel="stylesheet" href="staff-dashboard.css?v=20261010-7">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Chart.js for visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand__icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="brand__title">Acadivance</h1>
+        <p class="brand__subtitle">Smart Campus Analytics</p>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <button class="nav__item is-active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav__item" data-view="students">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>Student Explorer</span>
+      </button>
+
+      <button class="nav__item" data-view="risks">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>At-Risk Students</span>
+      </button>
+
+      <button class="nav__item" data-view="placements">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        <span>Placement Insights</span>
+      </button>
+
+      <button class="nav__item" data-view="interventions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="m9 14 2 2 4-4"/></svg>
+        <span>Intervention Center</span>
+      </button>
+
+      <button class="nav__item" data-view="integration">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        <span>Data Integration</span>
+      </button>
+
+      <button class="nav__item" data-view="reports">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>Reports & Insights</span>
+      </button>
+    </nav>
+
+    <div class="sidebar__bottom">
+      <button class="nav__item" data-view="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span>Settings</span>
+      </button>
+
+      <div class="status-indicator">
+        <div><span class="status-dot"></span>System Online</div>
+        <span>v1.0.0</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN WRAPPER ================= -->
+  <div class="main-wrap">
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="global-search" placeholder="Search students, IDs, or departments...">
+      </div>
+
+      <div class="topbar__actions">
+        <!-- Theme toggle -->
+        <button class="icon-btn" id="theme-toggle" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </button>
+
+        <!-- Notification Bell -->
+        <button class="icon-btn" id="notif-btn" title="Notifications" aria-label="Notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="badge-dot"></span>
+        </button>
+
+        <!-- User profile -->
+        <div class="user-badge" id="user-menu-btn">
+          <div class="avatar-circle" id="user-avatar">ST</div>
+          <div class="user-meta">
+            <p class="user-meta__name" id="user-name">Staff User</p>
+            <p class="user-meta__role" id="user-role">Administrator</p>
+          </div>
+          <button class="btn-sm" id="logout-btn" title="Sign out" style="margin-left: 8px;">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Workspace -->
+    <main class="content-area">
+
+      <!-- ================= VIEW 1: DASHBOARD ================= -->
+      <section class="view-panel is-active" id="view-dashboard">
+        <!-- Header -->
+        <div class="page-head">
+          <div>
+            <h2 class="page-title" id="greeting-title">Welcome back, Staff User!</h2>
+            <p class="page-subtitle">A clear view of student progress and who may need support.</p>
+          </div>
+          <div class="header-controls">
+            <div class="date-pill">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span id="dashboard-date"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 1: KPI Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Total Students</p>
+              <div class="kpi-val-row">
+                <span class="kpi-val" id="kpi-total-students">—</span>
+              </div>
+              <p class="kpi-trend trend--neutral">Across all departments</p>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Average Progress Score</p>
+              <div class="kpi-val-row">
+                <span class="kpi-val" id="kpi-avg-score">—</span>
+                <span class="kpi-unit">/ 100</span>
+              </div>
+              <p class="kpi-trend trend--neutral">Average across current records</p>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Students Needing Support</p>
+              <div class="kpi-val-row">
+                <span class="kpi-val" id="kpi-at-risk">—</span>
+              </div>
+              <p class="kpi-trend trend--negative" id="kpi-at-risk-sub">—</p>
+            </div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Placement-Ready Students</p>
+              <div class="kpi-val-row">
+                <span class="kpi-val" id="kpi-placement-ready">—</span>
+              </div>
+              <p class="kpi-trend trend--neutral" id="kpi-placement-ready-sub">—</p>
+            </div>
+          </div>
+        </div>
+
+        <section class="teacher-ai" aria-labelledby="teacher-ai-title">
+          <div class="teacher-ai__header">
+            <div>
+              <h3 class="teacher-ai__title" id="teacher-ai-title">Cohort Assistant</h3>
+              <p class="teacher-ai__hint">Ask about support priorities, departments, or placement readiness.</p>
+            </div>
+            <svg class="teacher-ai__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3a7 7 0 0 0-4 12.74V19h8v-3.26A7 7 0 0 0 12 3Z"/><path d="M9 22h6M9 19h6M12 7v4M10 9h4"/></svg>
+          </div>
+          <form class="teacher-ai__form" id="teacher-ai-form">
+            <label class="sr-only" for="teacher-ai-question">Question about the student cohort</label>
+            <input id="teacher-ai-question" name="question" maxlength="500" placeholder="Ask a question about your students..." autocomplete="off" required>
+            <button class="btn btn--primary" id="teacher-ai-submit" type="submit">Ask assistant</button>
+          </form>
+          <div class="teacher-ai__prompts" aria-label="Suggested questions">
+            <button type="button" data-ai-prompt="Who needs support first?">Who needs support first?</button>
+            <button type="button" data-ai-prompt="Which departments have the most students?">Compare departments</button>
+            <button type="button" data-ai-prompt="How can we improve placement readiness?">Placement readiness</button>
+          </div>
+          <div class="teacher-ai__answer" id="teacher-ai-answer" role="status" aria-live="polite">Your cohort guidance will appear here.</div>
+        </section>
+
+        <!-- Current student overview -->
+        <div class="analytics-grid">
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                Support Needs
+              </h3>
+            </div>
+            <div class="donut-wrap">
+              <div style="width: 140px; height: 140px; position: relative;">
+                <canvas id="riskChart"></canvas>
+                <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none;">
+                  <span style="font-size: 1.35rem; font-weight: 800;" id="donut-center-num">—</span>
+                  <span style="font-size: 0.7rem; color: var(--text-muted);">Students</span>
+                </div>
+              </div>
+              <div class="donut-legend" id="donut-legend-content">
+                <div class="legend-item">
+                  <span class="legend-dot" style="background-color: #ef4444;"></span>
+                  <span>Academic support</span>
+                  <span class="legend-val" id="legend-acad-val">—</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background-color: #f97316;"></span>
+                  <span>Career preparation</span>
+                  <span class="legend-val" id="legend-plc-val">—</span>
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot" style="background-color: #8b5cf6;"></span>
+                  <span>Both areas</span>
+                  <span class="legend-val" id="legend-both-val">—</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Students by Department
+              </h3>
+            </div>
+            <div class="dept-bars" id="dept-bars-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Students needing support and quick actions -->
+        <div class="section-split">
+          <!-- Left Table -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title" style="color: #dc2626;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Students Needing Support
+              </h3>
+              <a class="card__link" data-jump="students" data-filter="at_risk">View at-risk list</a>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Department</th>
+                    <th>Progress score</th>
+                    <th>Support area</th>
+                    <th>Last Activity</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="needing-review-tbody">
+                  <!-- Populated from DB -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right: Quick Actions -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                Quick Actions
+              </h3>
+            </div>
+            <div class="quick-actions-grid">
+              <button class="qa-card" data-jump="integration">
+                <div class="qa-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+                <p class="qa-title">Upload student data</p>
+                <p class="qa-sub">Import a CSV file</p>
+              </button>
+
+              <button class="qa-card" id="quick-download-report">
+                <div class="qa-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                </div>
+                <p class="qa-title">Download a report</p>
+                <p class="qa-sub">Export student results</p>
+              </button>
+
+              <button class="qa-card" id="quick-create-intervention">
+                <div class="qa-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                </div>
+                <p class="qa-title">Create a support plan</p>
+                <p class="qa-sub">Assign a follow-up action</p>
+              </button>
+
+              <button class="qa-card" data-jump="students">
+                <div class="qa-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <p class="qa-title">Browse students</p>
+                <p class="qa-sub">Search all student records</p>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent support plans -->
+        <div class="bottom-grid">
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                Recent Support Plans
+              </h3>
+              <a class="card__link" data-jump="interventions">View All</a>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Support need</th>
+                    <th>Owner</th>
+                    <th>Status</th>
+                    <th>Due Date</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-interventions-tbody">
+                  <!-- Populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================= VIEW 2: STUDENT EXPLORER ================= -->
+      <section class="view-panel" id="view-students">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">Student Explorer</h2>
+            <p class="page-subtitle">Search, filter, and monitor all student academic & placement profiles.</p>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-group">
+            <input type="text" class="form-control" id="explorer-search" placeholder="Filter by Name, ID..." style="width: 220px;">
+            <select class="form-control" id="explorer-dept" style="width: 170px;">
+              <option value="All">All Departments</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Mechanical">Mechanical</option>
+              <option value="Civil">Civil</option>
+              <option value="Business">Business</option>
+              <option value="Biotech">Biotech</option>
+              <option value="Others">Others</option>
+            </select>
+            <select class="form-control" id="explorer-risk" style="width: 160px;">
+              <option value="all">All Risk Statuses</option>
+              <option value="at_risk">All At-Risk</option>
+              <option value="academic">Academic Risk</option>
+              <option value="placement">Placement Risk</option>
+              <option value="both">Both Risks</option>
+              <option value="on_track">On Track (Safe)</option>
+            </select>
+            <select class="form-control" id="explorer-sort" style="width: 150px;">
+              <option value="score">Sort by Score</option>
+              <option value="name">Sort by Name</option>
+              <option value="cgpa">Sort by CGPA</option>
+              <option value="attendance">Sort by Attendance</option>
+              <option value="id">Sort by ID</option>
+            </select>
+          </div>
+          <div>
+            <button class="btn btn--primary" id="explorer-export-btn">Export Filtered CSV</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Full Name</th>
+                  <th>Department</th>
+                  <th>Semester</th>
+                  <th>CGPA</th>
+                  <th>Attendance</th>
+                  <th>Success Score</th>
+                  <th>Risk Flags</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="explorer-table-body">
+                <!-- Populated dynamically -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border-color);">
+            <p style="font-size: 0.82rem; color: var(--text-muted);" id="pagination-info">Showing 1 to 15 of 140 students</p>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-sm" id="prev-page-btn">Previous</button>
+              <button class="btn-sm" id="next-page-btn">Next</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 3: AT-RISK STUDENTS ================= -->
+      <section class="view-panel" id="view-risks">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">At-Risk Students</h2>
+            <p class="page-subtitle">Transparent rule-based risk triggers separating Academic Risk from Placement Risk.</p>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-group">
+            <button class="btn btn--primary btn-sm" id="risk-tab-all">All At-Risk</button>
+            <button class="btn btn--ghost btn-sm" id="risk-tab-academic">Academic Risk</button>
+            <button class="btn btn--ghost btn-sm" id="risk-tab-placement">Placement Risk</button>
+            <button class="btn btn--ghost btn-sm" id="risk-tab-both">Dual Risk (Both)</button>
+          </div>
+          <span style="font-size: 0.84rem; color: var(--text-muted);" id="risk-count-badge">Loading at-risk list...</span>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Department</th>
+                  <th>Category</th>
+                  <th>Severity</th>
+                  <th>Triggering Indicators</th>
+                  <th>Recommended Intervention</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="risk-table-body">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 4: PLACEMENT INSIGHTS ================= -->
+      <section class="view-panel" id="view-placements">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">Placement Insights</h2>
+            <p class="page-subtitle">Campus placement readiness distributions, skill gap diagnostics, and interview metrics.</p>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--teal">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Placement Ready</p>
+              <div class="kpi-val-row"><span class="kpi-val" id="plc-kpi-ready">—</span></div>
+              <p class="kpi-trend trend--neutral" id="plc-kpi-pct">—</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Avg. Coding Score</p>
+              <div class="kpi-val-row"><span class="kpi-val" id="plc-kpi-coding">—</span><span class="kpi-unit">/ 100</span></div>
+              <p class="kpi-trend trend--positive">Technical Assessment Bar</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--emerald">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Avg. Aptitude Score</p>
+              <div class="kpi-val-row"><span class="kpi-val" id="plc-kpi-apt">—</span><span class="kpi-unit">/ 100</span></div>
+              <p class="kpi-trend trend--neutral">Reasoning & Logic</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-wrap kpi-icon--red">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <div class="kpi-body">
+              <p class="kpi-label">Mock Interviews</p>
+              <div class="kpi-val-row"><span class="kpi-val" id="plc-kpi-mocks">—</span></div>
+              <p class="kpi-trend trend--positive">Completed across campus</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-split">
+          <!-- Skill gaps -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">Skill Gap Analysis (Institutional Benchmarks)</h3>
+            </div>
+            <div id="plc-skill-gaps-container" style="display: flex; flex-direction: column; gap: 14px;">
+              <!-- Dynamic bars -->
+            </div>
+          </div>
+
+          <!-- Department Readiness Comparison -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">Department Placement Readiness</h3>
+            </div>
+            <div id="plc-dept-readiness-container" style="display: flex; flex-direction: column; gap: 12px;">
+              <!-- Dynamic bars -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Students needing placement support -->
+        <div class="card" style="margin-top: 24px;">
+          <div class="card__head">
+            <h3 class="card__title" style="color: #ea580c;">Students Requiring Placement Intervention</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student ID</th>
+                  <th>Name</th>
+                  <th>Department</th>
+                  <th>Readiness Score</th>
+                  <th>Coding</th>
+                  <th>Aptitude</th>
+                  <th>Resume & Mocks</th>
+                  <th>Primary Skill Gap</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="plc-support-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 5: INTERVENTION CENTER ================= -->
+      <section class="view-panel" id="view-interventions">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">Intervention Center</h2>
+            <p class="page-subtitle">Track, coordinate, and review student remediation workflows and outcomes.</p>
+          </div>
+          <div>
+            <button class="btn btn--primary" id="open-new-intervention-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Create Intervention
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-group">
+            <select class="form-control" id="int-status-filter" style="width: 150px;">
+              <option value="All">All Statuses</option>
+              <option value="Open">Open</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Scheduled">Scheduled</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+            <select class="form-control" id="int-priority-filter" style="width: 140px;">
+              <option value="All">All Priorities</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+            <select class="form-control" id="int-cat-filter" style="width: 150px;">
+              <option value="All">All Categories</option>
+              <option value="academic">Academic</option>
+              <option value="placement">Placement</option>
+              <option value="attendance">Attendance</option>
+            </select>
+          </div>
+          <span style="font-size: 0.84rem; color: var(--text-muted);" id="int-count-label">Loading interventions...</span>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Title & Issue</th>
+                  <th>Category</th>
+                  <th>Assigned To</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="interventions-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 6: DATA INTEGRATION ================= -->
+      <section class="view-panel" id="view-integration">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">Data Integration & CSV Imports</h2>
+            <p class="page-subtitle">Import institutional records, validate datasets with row-level error reporting, and commit to database.</p>
+          </div>
+        </div>
+
+        <!-- Download Templates -->
+        <div class="card" style="margin-bottom: 24px;">
+          <div class="card__head">
+            <h3 class="card__title">Download Standard CSV Templates</h3>
+          </div>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="/api/integration/template/students" class="btn btn--ghost btn-sm">Students Template (.csv)</a>
+            <a href="/api/integration/template/academics" class="btn btn--ghost btn-sm">Academic Records Template (.csv)</a>
+            <a href="/api/integration/template/attendance" class="btn btn--ghost btn-sm">Attendance Template (.csv)</a>
+            <a href="/api/integration/template/lms" class="btn btn--ghost btn-sm">LMS Activity Template (.csv)</a>
+            <a href="/api/integration/template/placement" class="btn btn--ghost btn-sm">Placement Readiness Template (.csv)</a>
+          </div>
+        </div>
+
+        <!-- Upload Form -->
+        <div class="card">
+          <div class="card__head">
+            <h3 class="card__title">Upload & Validate Dataset</h3>
+          </div>
+          <form id="csv-upload-form" style="display: flex; flex-direction: column; gap: 16px;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 16px;">
+              <div class="form-group">
+                <label for="import-type-select">Dataset Type</label>
+                <select class="form-control" id="import-type-select" required>
+                  <option value="students">Students Master</option>
+                  <option value="academics">Academic Grades & CGPA</option>
+                  <option value="attendance">Class Attendance</option>
+                  <option value="lms">LMS Engagement</option>
+                  <option value="placement">Placement & Skills</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="csv-file-input">Select CSV File</label>
+                <input type="file" class="form-control" id="csv-file-input" accept=".csv" required>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px;">
+              <button type="button" class="btn btn--ghost" id="preview-csv-btn">Validate & Preview</button>
+              <button type="submit" class="btn btn--primary" id="commit-csv-btn">Commit to Database</button>
+            </div>
+          </form>
+
+          <!-- Import Results / Preview -->
+          <div id="import-results-box" style="margin-top: 24px; display: none;">
+            <h4 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Validation Summary</h4>
+            <div id="import-summary-text" style="font-size: 0.85rem; margin-bottom: 12px;"></div>
+            <div class="table-responsive">
+              <table class="data-table" id="import-preview-table">
+                <!-- Preview headers and rows -->
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 7: REPORTS & METHODOLOGY ================= -->
+      <section class="view-panel" id="view-reports">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">Reports & Methodology</h2>
+            <p class="page-subtitle">Institutional data export and complete explainability methodology.</p>
+          </div>
+        </div>
+
+        <div class="section-split">
+          <!-- Export Filter Card -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">Generate Export Report</h3>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="form-group">
+                <label>Department Filter</label>
+                <select class="form-control" id="report-dept-select">
+                  <option value="All">All Departments</option>
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="Civil">Civil</option>
+                  <option value="Business">Business</option>
+                  <option value="Biotech">Biotech</option>
+                  <option value="Others">Others</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Risk Cohort Filter</label>
+                <select class="form-control" id="report-risk-select">
+                  <option value="all">All Cohorts</option>
+                  <option value="academic">Academic Risk Cohort</option>
+                  <option value="placement">Placement Risk Cohort</option>
+                  <option value="both">Dual Risk Cohort</option>
+                  <option value="at_risk">All Flagged Students</option>
+                </select>
+              </div>
+              <button class="btn btn--primary" id="export-report-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Comprehensive CSV Report
+              </button>
+            </div>
+          </div>
+
+          <!-- Methodology Card -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">Predictive Scoring Methodology</h3>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+              Acadivance calculates the student success score deterministically:
+            </p>
+            <div style="background-color: var(--surface-bg); padding: 12px; border-radius: var(--radius-md); font-family: monospace; font-size: 0.9rem; font-weight: 700; color: var(--teal-800); margin-bottom: 14px;">
+              S = 0.35A + 0.20T + 0.15L + 0.20P + 0.10E
+            </div>
+            <ul style="font-size: 0.82rem; color: var(--text-main); display: flex; flex-direction: column; gap: 8px; margin-left: 18px;">
+              <li><b>A (35%):</b> Academic Performance (CGPA scaled 0–100, penalized by backlogs).</li>
+              <li><b>T (20%):</b> Classroom Attendance percentage.</li>
+              <li><b>L (15%):</b> LMS course completion & quiz performance.</li>
+              <li><b>P (20%):</b> Placement readiness, coding tests, and aptitude assessments.</li>
+              <li><b>E (10%):</b> Campus engagement, clubs, and mentor check-ins.</li>
+            </ul>
+            <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 14px;">
+              Missing components are re-weighted fairly rather than assigned a zero penalty.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= VIEW 8: SETTINGS ================= -->
+      <section class="view-panel" id="view-settings">
+        <div class="page-head">
+          <div>
+            <h2 class="page-title">Institutional Settings & Weights</h2>
+            <p class="page-subtitle">Configure predictive success score weights, institutional risk thresholds, and inspect audit trails.</p>
+          </div>
+        </div>
+
+        <div class="section-split">
+          <!-- Weights Form -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">Formula Weights (Total = 1.0)</h3>
+            </div>
+            <form id="weights-form" style="display: flex; flex-direction: column; gap: 14px;">
+              <div class="form-group">
+                <label>Academic Weight (A): <b id="lbl-w-acad">0.35</b></label>
+                <input type="range" class="form-control" id="inp-w-acad" min="0" max="1" step="0.05" value="0.35">
+              </div>
+              <div class="form-group">
+                <label>Attendance Weight (T): <b id="lbl-w-att">0.20</b></label>
+                <input type="range" class="form-control" id="inp-w-att" min="0" max="1" step="0.05" value="0.20">
+              </div>
+              <div class="form-group">
+                <label>LMS Activity Weight (L): <b id="lbl-w-lms">0.15</b></label>
+                <input type="range" class="form-control" id="inp-w-lms" min="0" max="1" step="0.05" value="0.15">
+              </div>
+              <div class="form-group">
+                <label>Placement & Skills Weight (P): <b id="lbl-w-plc">0.20</b></label>
+                <input type="range" class="form-control" id="inp-w-plc" min="0" max="1" step="0.05" value="0.20">
+              </div>
+              <div class="form-group">
+                <label>Campus Engagement Weight (E): <b id="lbl-w-eng">0.10</b></label>
+                <input type="range" class="form-control" id="inp-w-eng" min="0" max="1" step="0.05" value="0.10">
+              </div>
+
+              <h4 style="font-size: 0.9rem; font-weight: 700; margin-top: 10px;">Risk Thresholds</h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="form-group">
+                  <label>CGPA Threshold (min)</label>
+                  <input type="number" class="form-control" id="inp-th-cgpa" value="6.0" step="0.1" min="0" max="10">
+                </div>
+                <div class="form-group">
+                  <label>Attendance % (min)</label>
+                  <input type="number" class="form-control" id="inp-th-att" value="75.0" step="1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                  <label>LMS % (min)</label>
+                  <input type="number" class="form-control" id="inp-th-lms" value="60.0" step="1" min="0" max="100">
+                </div>
+                <div class="form-group">
+                  <label>Placement Readiness % (min)</label>
+                  <input type="number" class="form-control" id="inp-th-plc" value="60.0" step="1" min="0" max="100">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn--primary" style="margin-top: 8px;">Save Weight Configuration</button>
+            </form>
+          </div>
+
+          <!-- Audit Log Trail -->
+          <div class="card">
+            <div class="card__head">
+              <h3 class="card__title">Security & Action Audit Trail</h3>
+            </div>
+            <div class="table-responsive" style="max-height: 480px; overflow-y: auto;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-trail-tbody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- 1. Student Detailed Profile Modal -->
+  <div class="modal-backdrop" id="student-modal">
+    <div class="modal modal--lg">
+      <div class="modal__head">
+        <div>
+          <h3 class="modal__title" id="m-student-name">Student Profile</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted);" id="m-student-sub">ID: CS2021001 · Computer Science</p>
+        </div>
+        <button class="modal__close" id="close-student-modal">&times;</button>
+      </div>
+      <div class="modal__body" id="m-student-body">
+        <!-- Rendered dynamically: radar/breakdown, explainable scores, risk triggers, and interventions -->
+      </div>
+      <div class="modal__foot">
+        <button class="btn btn--ghost btn-sm" id="btn-modal-close-student">Close</button>
+        <button class="btn btn--primary btn-sm" id="btn-modal-create-intervention">Create Intervention</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Create / Edit Intervention Modal -->
+  <div class="modal-backdrop" id="intervention-modal">
+    <div class="modal">
+      <div class="modal__head">
+        <h3 class="modal__title" id="m-int-title">Create Student Intervention</h3>
+        <button class="modal__close" id="close-int-modal">&times;</button>
+      </div>
+      <form id="intervention-form">
+        <div class="modal__body">
+          <input type="hidden" id="form-int-id">
+          <div class="form-group">
+            <label for="form-int-student">Student ID</label>
+            <input type="text" class="form-control" id="form-int-student" required placeholder="e.g. CS2021001">
+          </div>
+          <div class="form-group">
+            <label for="form-int-title-inp">Intervention Title</label>
+            <input type="text" class="form-control" id="form-int-title-inp" required placeholder="e.g. Remedial Tutoring in Data Structures">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label for="form-int-category">Category</label>
+              <select class="form-control" id="form-int-category">
+                <option value="academic">Academic</option>
+                <option value="placement">Placement</option>
+                <option value="attendance">Attendance</option>
+                <option value="wellbeing">General / Wellbeing</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="form-int-priority">Priority</label>
+              <select class="form-control" id="form-int-priority">
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+                <option value="Urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="form-int-issue">Specific Issue / Trigger</label>
+            <input type="text" class="form-control" id="form-int-issue" required placeholder="e.g. Low CGPA and 2 active backlogs">
+          </div>
+          <div class="form-group">
+            <label for="form-int-plan">Action Plan</label>
+            <textarea class="form-control" id="form-int-plan" rows="3" required placeholder="Describe assigned sessions, faculty check-ins, or tasks..."></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label for="form-int-assignee">Assigned Staff</label>
+              <input type="text" class="form-control" id="form-int-assignee" value="Dr. Mehta">
+            </div>
+            <div class="form-group">
+              <label for="form-int-due">Due Date</label>
+              <input type="text" class="form-control" id="form-int-due" value="May 25, 2025">
+            </div>
+          </div>
+        </div>
+        <div class="modal__foot">
+          <button type="button" class="btn btn--ghost" id="cancel-int-btn">Cancel</button>
+          <button type="submit" class="btn btn--primary">Save Intervention</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="staff-dashboard.js?v=20261010-4"></script>
+</body>
+</html>

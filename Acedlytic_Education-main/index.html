@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Portal | Login</title>
+  <link rel="stylesheet" href="style.css?v=20261010-4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand__logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>
+      </span>
+      <div>
+        <h1 class="brand__name">College Portal</h1>
+        <p class="brand__tag">Sign in to continue</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="split">
+    <!-- ================= STUDENT (top half) ================= -->
+    <section class="panel panel--student" aria-labelledby="student-title">
+      <div class="panel__intro">
+        <span class="panel__icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </span>
+        <h2 id="student-title">Student Access</h2>
+        <p>Sign in or create your student account.</p>
+      </div>
+
+      <div class="card">
+        <div class="tabs student-tabs" role="tablist" aria-label="Student access method">
+          <button class="tab is-active" role="tab" id="tab-id" aria-controls="pane-id" aria-selected="true" type="button">Sign in</button>
+          <button class="tab" role="tab" id="tab-register" aria-controls="pane-register" aria-selected="false" tabindex="-1" type="button">Sign up</button>
+          <button class="tab" role="tab" id="tab-frs" aria-controls="pane-frs" aria-selected="false" tabindex="-1" type="button">Face ID</button>
+        </div>
+
+        <!-- Option 1: Student ID + password -->
+        <div class="pane" id="pane-id" role="tabpanel" aria-labelledby="tab-id">
+          <form id="student-form" novalidate>
+            <div class="field">
+              <label for="student-id">Student ID</label>
+              <input id="student-id" name="studentId" type="text" autocomplete="username" placeholder="e.g. STU2026001" aria-describedby="student-id-err">
+              <p class="field__error" id="student-id-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="student-pass">Password</label>
+              <div class="password">
+                <input id="student-pass" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" aria-describedby="student-pass-err">
+                <button class="password__toggle" type="button" data-toggle="student-pass" aria-label="Show password">Show</button>
+              </div>
+              <p class="field__error" id="student-pass-err" role="alert"></p>
+            </div>
+            <div class="row">
+              <label class="check"><input type="checkbox" name="remember"> Remember me</label>
+              <a class="link" href="#">Forgot password?</a>
+            </div>
+            <div class="alert" role="status" aria-live="polite" hidden></div>
+            <button class="btn btn--primary" type="submit"><span class="btn__label">Log in as Student</span></button>
+          </form>
+        </div>
+
+        <div class="pane" id="pane-register" role="tabpanel" aria-labelledby="tab-register" hidden>
+          <form id="student-register-form" novalidate>
+            <p class="hint">Use the student ID assigned by your college.</p>
+            <div class="field">
+              <label for="new-student-id">Student ID</label>
+              <input id="new-student-id" name="studentId" type="text" autocomplete="username" placeholder="e.g. STU2027001" aria-describedby="new-student-id-err">
+              <p class="field__error" id="new-student-id-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-student-name">Full name</label>
+              <input id="new-student-name" name="fullName" type="text" autocomplete="name" placeholder="Your full name" aria-describedby="new-student-name-err">
+              <p class="field__error" id="new-student-name-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-student-email">Email</label>
+              <input id="new-student-email" name="email" type="email" autocomplete="email" placeholder="you@college.edu" aria-describedby="new-student-email-err">
+              <p class="field__error" id="new-student-email-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-student-department">Department</label>
+              <select id="new-student-department" name="department">
+                <option value="">Select department</option>
+                <option>Computer Science</option>
+                <option>Electronics</option>
+                <option>Mechanical</option>
+                <option>Civil</option>
+                <option>Business</option>
+                <option>Biotech</option>
+                <option>Others</option>
+              </select>
+              <p class="field__error" id="new-student-department-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-student-password">Create password</label>
+              <input id="new-student-password" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" aria-describedby="new-student-password-err">
+              <p class="field__error" id="new-student-password-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-student-confirm">Confirm password</label>
+              <input id="new-student-confirm" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Re-enter your password" aria-describedby="new-student-confirm-err">
+              <p class="field__error" id="new-student-confirm-err" role="alert"></p>
+            </div>
+            <div class="row">
+              <label class="check"><input type="checkbox" name="remember"> Remember me</label>
+            </div>
+            <div class="alert" role="status" aria-live="polite" hidden></div>
+            <button class="btn btn--primary" type="submit"><span class="btn__label">Create student account</span></button>
+          </form>
+        </div>
+
+        <!-- Option 2: Platform biometric sign-in -->
+        <div class="pane" id="pane-frs" role="tabpanel" aria-labelledby="tab-frs" hidden>
+          <div class="frs">
+            <p>Enter your Student ID, then verify with Face ID, Windows Hello, or a saved passkey. Your biometric data stays on this device.</p>
+            <div class="field">
+              <label for="face-login-id">Student ID</label>
+              <input id="face-login-id" type="text" autocomplete="username" placeholder="e.g. STU2026001">
+            </div>
+            <button class="btn btn--primary" id="face-login" type="button"><span class="btn__label">Sign in with Face ID</span></button>
+            <p class="frs__status" id="face-status" role="status" aria-live="polite"></p>
+            <details class="face-setup">
+              <summary>Set up Face ID on this device</summary>
+              <div class="field">
+                <label for="face-student-id">Student ID</label>
+                <input id="face-student-id" type="text" autocomplete="username" placeholder="e.g. STU2026001">
+              </div>
+              <div class="field">
+                <label for="face-student-password">Student password</label>
+                <input id="face-student-password" type="password" autocomplete="current-password" placeholder="Verify your account">
+              </div>
+              <button class="btn btn--ghost" id="face-enroll" type="button">Register this device</button>
+            </details>
+            <button class="link link--btn" type="button" id="frs-fallback">Use Student ID instead</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HORIZONTAL DIVIDER ================= -->
+    <div class="divider" role="separator" aria-orientation="horizontal"><span>Are you a teacher?</span></div>
+
+    <!-- ================= TEACHER (bottom half) ================= -->
+    <section class="panel panel--teacher" aria-labelledby="teacher-title">
+      <div class="panel__intro">
+        <span class="panel__icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+        </span>
+        <h2 id="teacher-title">Teacher Access</h2>
+        <p>Sign in or create a teacher account.</p>
+      </div>
+
+      <div class="card">
+        <div class="tabs teacher-tabs" role="tablist" aria-label="Teacher access method">
+          <button class="tab is-active" role="tab" id="teacher-tab-login" aria-controls="teacher-pane-login" aria-selected="true" type="button">Sign in</button>
+          <button class="tab" role="tab" id="teacher-tab-register" aria-controls="teacher-pane-register" aria-selected="false" tabindex="-1" type="button">Sign up</button>
+        </div>
+        <div class="pane" id="teacher-pane-login" role="tabpanel" aria-labelledby="teacher-tab-login">
+          <form id="teacher-form" novalidate>
+            <div class="field">
+              <label for="teacher-id">Teacher ID or Email</label>
+              <input id="teacher-id" name="teacherId" type="text" autocomplete="username" placeholder="e.g. TCH1042 or name@college.edu" aria-describedby="teacher-id-err">
+              <p class="field__error" id="teacher-id-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="teacher-pass">Password</label>
+              <div class="password">
+                <input id="teacher-pass" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" aria-describedby="teacher-pass-err">
+                <button class="password__toggle" type="button" data-toggle="teacher-pass" aria-label="Show password">Show</button>
+              </div>
+              <p class="field__error" id="teacher-pass-err" role="alert"></p>
+            </div>
+            <div class="row">
+              <label class="check"><input type="checkbox" name="remember"> Remember me</label>
+              <a class="link" href="#">Forgot password?</a>
+            </div>
+            <div class="alert" role="status" aria-live="polite" hidden></div>
+            <button class="btn btn--primary btn--teacher" type="submit"><span class="btn__label">Log in as Teacher</span></button>
+          </form>
+        </div>
+        <div class="pane" id="teacher-pane-register" role="tabpanel" aria-labelledby="teacher-tab-register" hidden>
+          <form id="teacher-register-form" novalidate>
+            <div class="field">
+              <label for="new-teacher-id">Teacher ID</label>
+              <input id="new-teacher-id" type="text" autocomplete="username" placeholder="Your college-issued teacher ID" aria-describedby="new-teacher-id-err">
+              <p class="field__error" id="new-teacher-id-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-teacher-name">Full name</label>
+              <input id="new-teacher-name" type="text" autocomplete="name" placeholder="Your full name" aria-describedby="new-teacher-name-err">
+              <p class="field__error" id="new-teacher-name-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-teacher-email">College email</label>
+              <input id="new-teacher-email" type="email" autocomplete="email" placeholder="you@college.edu" aria-describedby="new-teacher-email-err">
+              <p class="field__error" id="new-teacher-email-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-teacher-password">Create password</label>
+              <input id="new-teacher-password" type="password" autocomplete="new-password" placeholder="At least 8 characters" aria-describedby="new-teacher-password-err">
+              <p class="field__error" id="new-teacher-password-err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="new-teacher-confirm">Confirm password</label>
+              <input id="new-teacher-confirm" type="password" autocomplete="new-password" placeholder="Re-enter your password" aria-describedby="new-teacher-confirm-err">
+              <p class="field__error" id="new-teacher-confirm-err" role="alert"></p>
+            </div>
+            <div class="row">
+              <label class="check"><input type="checkbox" name="remember"> Remember me</label>
+            </div>
+            <div class="alert" role="status" aria-live="polite" hidden></div>
+            <button class="btn btn--primary btn--teacher" type="submit"><span class="btn__label">Create teacher account</span></button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">Need help? Contact your college administrator.</footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

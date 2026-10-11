@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard | College Portal</title>
+  <link rel="stylesheet" href="dashboard.css?v=20261010-5">
+</head>
+<body>
+  <div class="app">
+
+    <header class="topbar">
+      <div class="who">
+        <span class="avatar" id="avatar" aria-hidden="true">S</span>
+        <div>
+          <p class="who__hi">Welcome back</p>
+          <h1 class="who__name" id="who-name">Student</h1>
+        </div>
+      </div>
+      <button class="logout" id="logout" type="button">Log out</button>
+    </header>
+
+    <main>
+      <p class="role-note" id="role-note" hidden>Teacher preview: you are seeing a sample student view.</p>
+
+      <!-- Attendance circle -->
+      <section class="attendance" aria-labelledby="att-title">
+        <h2 class="label" id="att-title">Attendance</h2>
+        <div class="ring" id="ring" role="img" aria-label="Attendance">
+          <svg viewBox="0 0 220 220" aria-hidden="true">
+            <circle class="ring__track" cx="110" cy="110" r="100"></circle>
+            <circle class="ring__bar" id="ring-bar" cx="110" cy="110" r="100"></circle>
+          </svg>
+          <div class="ring__center">
+            <span class="ring__percent" id="att-percent">0%</span>
+            <span class="ring__caption" id="att-caption" aria-live="polite">&nbsp;</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Student Success Score -->
+      <section class="score" aria-labelledby="score-title">
+        <div class="score__head">
+          <h2 class="score__title" id="score-title">Student Success Score</h2>
+          <span class="badge" id="score-badge">-</span>
+        </div>
+        <div class="score__row">
+          <span class="score__num" id="score-num">0</span><span class="score__max">/ 100</span>
+          <div class="meter" aria-hidden="true"><span id="score-bar"></span></div>
+        </div>
+        <details class="how">
+          <summary>How is this calculated?</summary>
+          <ul class="how__list" id="score-how"></ul>
+        </details>
+      </section>
+
+      <!-- Student records and active support plans -->
+      <section aria-label="Student data">
+        <div class="tiles" id="tiles"><p class="loading">Loading your data…</p></div>
+      </section>
+
+      <!-- AI Coach -->
+      <section class="ai-coach" aria-labelledby="ai-title">
+        <div class="ai-coach__header">
+          <h2 class="label" id="ai-title">AI Student Coach</h2>
+          <span class="ai-chip">Smart Guidance</span>
+        </div>
+        <textarea id="ai-question" rows="3" placeholder="Ask about your attendance, CGPA, LMS progress, placement readiness, or next steps..."></textarea>
+        <div class="ai-coach__actions">
+          <button id="ask-ai-btn" type="button">Ask AI</button>
+        </div>
+        <div id="ai-answer" class="ai-answer" aria-live="polite">Your personalized guidance will appear here.</div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="detail" aria-labelledby="detail-title">
+    <form method="dialog" class="detail__head">
+      <h3 id="detail-title">Details</h3>
+      <button class="detail__close" aria-label="Close">×</button>
+    </form>
+    <div id="detail-body"></div>
+  </dialog>
+
+  <script src="dashboard.js?v=20261010-1"></script>
+</body>
+</html>
